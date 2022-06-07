@@ -24,8 +24,10 @@ class JdbcPostStorage(
   def getPosts(channel: String): Future[Seq[PostEntity]] =
     db.run(posts.filter(_.channel === channel).result)
 
-  def savePost(post: PostEntity): Future[PostEntity] =
-    db.run(posts.insertOrUpdate(post)).map(_ => post)
+  def savePost(post: PostEntity): Future[PostEntity] = {
+    val a = db.run(posts.insertOrUpdate(post))
+    a.map(_ => post)
+  }
 
 }
 

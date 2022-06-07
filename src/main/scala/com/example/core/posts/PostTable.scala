@@ -9,7 +9,7 @@ private[posts] trait PostTable {
   protected val databaseConnector: DatabaseConnector
   import databaseConnector.profile.api._
 
-  class Posts(tag: Tag) extends Table[PostEntity](tag, "post") {
+  class Posts(tag: Tag) extends Table[PostEntity](tag, "posts") {
     def id = column[String]("id", O.PrimaryKey)
     def channel = column[String]("channel")
     def title = column[String]("title")

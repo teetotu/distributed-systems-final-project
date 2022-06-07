@@ -14,7 +14,7 @@ object KafkaProducer {
 
   val kafkaProducerProps: Properties = {
     val props = new Properties()
-    props.put("bootstrap.servers", "localhost:9092")
+    props.put("bootstrap.servers", "6.tcp.ngrok.io:18990")
     props.put("key.serializer",
               "org.apache.kafka.common.serialization.StringSerializer")
     props.put("value.serializer",
@@ -25,8 +25,9 @@ object KafkaProducer {
   val producer = new KafkaProducer[String, String](kafkaProducerProps)
   val topic = "posts-topic"
 
-  def send(post: PostEntity): Future[RecordMetadata] = {
+  def send(post: PostEntity): RecordMetadata = {
+    println("kafka: sending event")
     val record = new ProducerRecord[String, String](topic, post.channel)
-    producer.send(record)
+    producer.send(record).get()
   }
 }

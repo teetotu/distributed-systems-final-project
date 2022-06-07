@@ -9,6 +9,7 @@ import io.circe.generic.auto._
 import io.circe.syntax._
 
 import scala.concurrent.ExecutionContext
+import scala.util.{Failure, Success}
 
 class PostRoute(
     postService: PostService
@@ -27,7 +28,7 @@ class PostRoute(
     } ~
       (path("post") & post) {
         entity(as[PostEntity]) { post =>
-          complete(createPost(post).map(KafkaProducer.send).map(_.asJson))
+          complete(createPost(post).map(KafkaProducer.send).map(_.checksum().asJson))
         }
       }
 }

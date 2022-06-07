@@ -1,8 +1,9 @@
 package com.example.utils
 
-import pureconfig.ConfigSource
+import pureconfig.{ConfigSource, loadConfig}
+import pureconfig.generic.auto._
 
-case class Config(secretKey: String, http: HttpConfig, database: DatabaseConfig)
+case class Config(http: HttpConfig, database: DatabaseConfig)
 
 object Config {
   def load(): Config =
