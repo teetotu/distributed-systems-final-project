@@ -34,7 +34,7 @@ object Boot extends App {
     val usersService = new PostService(postStorage)
     val httpRoute = new HttpRoute(usersService)
 
-    Http().newServerAt(config.http.host, config.http.port).bind(httpRoute.route)
+    Http().newServerAt(config.http.host, sys.env.getOrElse("PORT", "9000").toInt).bind(httpRoute.route)
   }
 
   startApplication()
